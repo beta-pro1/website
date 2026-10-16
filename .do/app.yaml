@@ -1,0 +1,20 @@
+name: iotriga-website
+region: fra
+services:
+  - name: web
+    github:
+      repo: <github-org>/iotriga-website
+      branch: main
+      deploy_on_push: true
+    environment_slug: node-js
+    build_command: npm ci && npm run build
+    run_command: node build
+    http_port: 8080
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_count: 1
+    health_check:
+      http_path: /health
+    envs:
+      - key: ORIGIN
+        value: ${APP_URL}
+        scope: RUN_TIME
